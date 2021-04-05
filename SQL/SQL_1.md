@@ -12,19 +12,29 @@ SQL이란?-1
 ### Database 생성
 cmd에서 MySQL 관리자 계정인 root로 DBMS 시스템에 접속
 
-  mysql -uroot -p
+    mysql -uroot -p
   
  database 생성
 
-  mysql> create database DB이름;
+    mysql> create database DB이름;
   
  ### Database 사용자 생성과 권한 주기
- * 모든 권한, @'%' 어떤 클라이언트에서든 접근 가능, @'localhost' 해당 컴퓨터에서만 접근 가능
+\*모든 권한, @'%' 어떤 클라이언트에서든 접근 가능, @'localhost' 해당 컴퓨터에서만 접근 가능
  
-  grant all privileges on db이름.*to 계정이름@'%'identified by '암호';
-  grant all privileges on db이름.*to 계정이름@'localhost'identified by '암호';
+    grant all privileges on db이름.*to 계정이름@'%'identified by '암호';
+    grant all privileges on db이름.*to 계정이름@'localhost'identified by '암호';
+
+    CREATE USER 'connectuser'@'%' IDENTIFIED BY 'connect123!@#';
+    grant all privileges on connectdb.* to connectuser@'%';
 
 flush privileges - DBMS에게 적용하라는 명령
 
-  flush privileges;
+    flush privileges;
 
+### 생성한 Database에 접속하기
+    mysql -h호스트명 -uDB계정명 -p 데이터베이스 이름
+    mysql -h127.0.0.1 -uconnectuser -p connectdb
+    
+### MySQL 연결끊기
+    mysql>quit
+    mysql>exit
