@@ -69,3 +69,37 @@ DML(select, insert, update, delete)
     mysql> select avg(salary), sum(salary) from employee where deptno = 30;
 ### group by ~별(부서별 ..)
     mysql> select deptno, avg(salary), sum(salary) from employee group by deptno;
+## insert 데이터 입력
+    mysql> insert into role values(200, 'CEO');
+    mysql> insert into role(description) values('CEO');	;role이 primary key이므로 오류
+    mysql> insert into role(role_id) values(123);	;description = null
+## update(where절 부여 안하면 전체 바뀜)
+    mysql> update role set description ='CTO' where role_id=200;
+## delete
+    mysql> delete from role where role_id=200;
+* * *
+DDL
+======
+### create table 테이블 생성
+    mysql> create table employee2(
+        -> empno integer not null primary key,
+        -> name varchar(10),
+        -> job varchar(9),
+        -> boss integer,
+        -> hiredate varchar(12),
+        -> salary decimal(7,2),
+        -> comm decimal(7,2),
+        -> deptno integer);
+### alter table add(추가)/ drop(삭제)
+    mysql> alter table book add author varchar(20);
+    mysql> alter table book drop price;
+### alter table change (수정)
+    mysql> alter table book change isbn bis varchar(10);
+### alter table rename(테이블 이름 변경)
+    mysql> alter table book rename boook;
+### drop table 테이블 삭제, 제약조건이 있을경우(foriegn key) 삭제 불가/테이블을 생성한 반대 순으로 삭제해야함
+    mysql> drop table boook;
+    mysql> insert into employee (empno, name, deptno)
+        -> values (1111, 'kang', 100);
+        
+ERROR 1452 (23000): Cannot add or update a child row: a foreign key constraint fails (`connectdb`.`employee`, CONSTRAINT `department` FOREIGN KEY (`deptno`) REFERENCES `department` (`deptno`))
