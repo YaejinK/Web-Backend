@@ -1,6 +1,6 @@
 SQL이란?-1
 =============
-### SQL(Structured Query Language)
+## SQL(Structured Query Language)
 - DBMS에게 내리는 명령
 - 데이터를 보다 쉽게 검색, 추가, 삭제, 수정 같은 조작할 수 있도록 고안된 컴퓨터 언어
 - 관계형 데이터베이스에서 데이터를 조작하고 쿼리하는 표준수단
@@ -12,7 +12,7 @@ SQL이란?-1
 
     mysql -uroot -p
   
-database 생성
+##### database 생성
 
     mysql> create database DB이름;
   
@@ -51,7 +51,11 @@ database 생성
 
 * * *
 SQL이란?-2
-=============
-
-    
-
+===========
+## Table
+- data를 저장하는 공간
+- 엑셀의 표와 유사한 테이블
+- 엑셀은 실행하면 표가 나오는 것과 달리 데이터베이스를 생성해도 테이블은 존재하지 않음
+- 테이블을 생성하고 값을 저장하기 위한 SQL 사용해야함
+### 테이블의 구성요소
+![Alt text](C:\Users\jnss5\Desktop\2.png)
