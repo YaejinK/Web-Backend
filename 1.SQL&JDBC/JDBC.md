@@ -26,7 +26,7 @@ JDBC란?
     String dburl  = "jdbc:mysql://localhost/dbName";
     Connection con =  DriverManager.getConnection ( dburl, ID, PWD );
 
-'''java
+```java
 public static Connection getConnection() throws Exception{
 	String url = "jdbc:oracle:thin:@117.16.46.111:1521:xe";
 	String user = "smu";
@@ -36,21 +36,21 @@ public static Connection getConnection() throws Exception{
 	conn = DriverManager.getConnection(url, user, password);
 	return conn;
 }
-'''
+```
 ##### Statement 생성
     Statement stmt = con.createStatement();
 ##### 질의 수행
     ResultSet rs = stmt.executeQuery("select no from user" );
 
-    참고
+    // 참고
     stmt.execute(“query”);             //any SQL
     stmt.executeQuery(“query”);     //SELECT
     stmt.executeUpdate(“query”);   //INSERT, UPDATE, DELETE
 ##### ResultSet으로 결과 받기
     ResultSet rs =  stmt.executeQuery( "select no from user" );
-    while ( rs.next() )
-          System.out.println( rs.getInt( "no") );
-##### close
+    while ( rs.next() ) //하나씩 꺼내옴
+          System.out.println( rs.getInt( "no") ); //column명 no
+##### close, 순서 거꾸로
     rs.close();
     stmt.close();
     con.close();
