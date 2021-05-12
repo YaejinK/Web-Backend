@@ -90,7 +90,8 @@ DOM tree
 
 <CSS parsing>
 객체화된 트리구조
-  ![image](https://user-images.githubusercontent.com/71435571/117992536-fb17fc80-b379-11eb-8fd5-a0173210a24a.png)
+
+![image](https://user-images.githubusercontent.com/71435571/117992956-44684c00-b37a-11eb-94be-21f61e194b1d.png)
 
 ### 5. browser에서 웹개발
 
