@@ -36,6 +36,7 @@
 - 값을 저장할 때는 session 객체의 setAttribute()메소드를 사용
 - 값을 읽어 들일 때는 session 객체의 getAttribute()메소드를 사용
 - 장바구니처럼 사용자별로 유지가 되어야 할 정보가 있을 때 사용
+- 클라이언트(웹 브라우저) 마다 가지고 있으므로 정보 유지 가능
 
 ### Application scope
 
@@ -46,4 +47,4 @@
 - 웹 어플리케이션 하나당 하나의 application객체가 사용
 - 값을 저장할 때는 application객체의 setAttribute()메소드를 사용
 - 값을 읽어 들일 때는 application객체의 getAttribute()메소드를 사용
-- 모든 클라이언트가 공통으로 사용해야 할 값들이 있을 때 사용
+- 모든 클라이언트가 공통으로 사용해야 할 값들이 있을 때 사용!!!
