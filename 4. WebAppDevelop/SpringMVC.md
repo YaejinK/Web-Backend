@@ -113,6 +113,7 @@ org.springframework.web.servlet.ViewResolver
 Spring MVC를 이용한 웹 페이지 작성 실습-1 
 => 기본 설정
 
+-----
 Spring MVC를 이용한 웹 페이지 작성 실습-2
 ### DispatcherServlet을 FrontController로 설정하기
 - web.xml 파일에 설정
@@ -160,13 +161,41 @@ kr.or.connect.webmvc.config.WebMvcContextConfiguration
 #### @RequestMapping
 - Http 요청과 이를 다루기 위한 Controller 의 메소드를 연결하는 어노테이션
 - Http Method 와 연결하는 방법
- - @RequestMapping(value="/users", method=RequestMethod.POST)
- - From Spring 4.3 version (@GetMapping, @PostMapping, @PutMapping, @DeleteMapping, @PatchMapping)
+  - @RequestMapping(value="/users", method=RequestMethod.POST)
+  - From Spring 4.3 version (@GetMapping, @PostMapping, @PutMapping, @DeleteMapping, @PatchMapping)
 - Http 특정 해더와 연결하는 방법
- - @RequestMapping(method = RequestMethod.GET, headers = "content-type=application/json")
+  - @RequestMapping(method = RequestMethod.GET, headers = "content-type=application/json")
 - Http Parameter 와 연결하는 방법
- - @RequestMapping(method = RequestMethod.GET, params = "type=raw")
+  - @RequestMapping(method = RequestMethod.GET, params = "type=raw")
 - Content-Type Header 와 연결하는 방법
- - @RequestMapping(method = RequestMethod.GET, consumes = "application/json")
+  - @RequestMapping(method = RequestMethod.GET, consumes = "application/json")
 - Accept Header 와 연결하는 방법
- - @RequestMapping(method = RequestMethod.GET, produces = "application/json")
+  - @RequestMapping(method = RequestMethod.GET, produces = "application/json")
+-----
+Spring MVC를 이용한 웹 페이지 작성 실습-3
+### Spring MVC가 지원하는 메소드 인수 애노테이션
+#### @RequestParam
+- Mapping된 메소드의 Argument에 붙일 수 있는 어노테이션
+- @RequestParam의 name에는 http parameter의 name과 멥핑
+- @RequestParam의 required는 필수인지 아닌지 판단
+  
+#### @PathVariable
+- @RequestMapping의 path에 변수명을 입력받기 위한 place holder가 필요함
+- place holder의 이름과 PathVariable의 name 값과 같으면 mapping 됨(일치해야함)
+- required 속성은 default true 임  
+ 
+#### @RequestHeader
+- 요청 정보의 헤더 정보를 읽어들 일 때 사용
+- @RequestHeader(name="헤더명") String 변수명
+
+### Spring MVC가 지원하는 메소드 리턴 값
+- org.springframework.web.servlet.ModelAndView
+- org.springframework.ui.Model
+- java.util.Map
+- org.springframework.ui.ModelMap
+- org.springframework.web.servlet.View
+- java.lang.String
+- java.lang.Void
+- org.springframework.http.HttpEntity<?>
+- org.springframework.http.ResponseEntity<?>
+- 기타 리턴 타입
