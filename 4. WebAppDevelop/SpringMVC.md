@@ -1,9 +1,9 @@
 ## 1) Spring MVC
 ### MVC
-- MVC는 Model-View-Controller의 약자입니다.
+- MVC는 Model-View-Controller의 약자
 - Model : 모델은 뷰가 렌더링하는데 필요한 데이터 (예: 사용자가 요청한 상품 목록이나, 주문 내역)
-- View : 웹 애플리케이션에서 뷰(View)는 실제로 보이는 부분이며, 모델을 사용해 렌더링을 합니다. 뷰는 JSP, JSF, PDF, XML등으로 결과를 표현합니다.
-- Controller : 컨트롤러는 사용자의 액션에 응답하는 컴포넌트입니다. 컨트롤러는 모델을 업데이트하고, 다른 액션을 수행합니다.
+- View : 웹 애플리케이션에서 뷰(View)는 실제로 보이는 부분이며, 모델을 사용해 렌더링을 합니다. 뷰는 JSP, JSF, PDF, XML등으로 결과를 표현
+- Controller : 컨트롤러는 사용자의 액션에 응답하는 컴포넌트입니다. 컨트롤러는 모델을 업데이트하고, 다른 액션을 수행
 
 #### MVC Model 1
 ![image](https://user-images.githubusercontent.com/71435571/119926863-2e31d100-bfb3-11eb-8a57-cfe881ba270e.png)
@@ -110,5 +110,63 @@ org.springframework.web.servlet.ViewResolver
 ![image](https://user-images.githubusercontent.com/71435571/119928463-98984080-bfb6-11eb-9221-bdede2f7d384.png)
 
 ## 3) Spring MVC를 이용한 웹 페이지 작성 실습
+Spring MVC를 이용한 웹 페이지 작성 실습-1 
+=> 기본 설정
 
+Spring MVC를 이용한 웹 페이지 작성 실습-2
+### DispatcherServlet을 FrontController로 설정하기
+- web.xml 파일에 설정
+- org.springframework.web.WebApplicationInitializer 인터페이스를 구현해서 사용
+- (javax.servlet.ServletContainerInitializer 사용 - 서블릿 3.0 스펙 이상에서 web.xml파일을 대신해서 사용할 수 있다.)
 
+### web.xml파일에서 DispatcherServlet 설정
+![image](https://user-images.githubusercontent.com/71435571/119934541-e5811480-bfc0-11eb-8aae-b6b8f3e80922.png)
+- xml spring 설정 읽어들이도록 DispathcerServlet설정
+![image](https://user-images.githubusercontent.com/71435571/119934916-8cfe4700-bfc1-11eb-9e19-ba0f4c5c7379.png)
+- Java config spring 설정 읽어들이도록 DispathcerServlet설정
+- xml파일이 아니라 자바 클래스 파일 읽어옴
+- 요청이 들어오면 url을 <url-pattern> 부분에 넣음
+  - 사이에 /만 넣으면 모든 요청을 받을 수 있음
+
+### WebApplicationInitializer를 구현해서 설정
+- Spring MVC는 ServletContainerInitializer를 구현하고 있는 SpringServletContainerInitializer를 제공
+- SpringServletContainerInitializer는 WebApplicationInitializer 구현체를 찾아 인스턴스를 만들고 해당 인스턴스의 onStartup 메소드를 호출하여 초기화
+- 단점으로 처음 웹 어플리케이션이 구동되는데 시간이 오래걸릴 수 있음
+![image](https://user-images.githubusercontent.com/71435571/119935305-41986880-bfc2-11eb-82fe-6e788a704e76.png)
+  
+#### Spring MVC 설정
+kr.or.connect.webmvc.config.WebMvcContextConfiguration
+![image](https://user-images.githubusercontent.com/71435571/119935414-70164380-bfc2-11eb-8b03-a74c2abe1641.png)
+
+#### @Configuration
+- org.springframework.context.annotation의 Configuration 애노테이션과 Bean 애노테이션 코드를 이용하여 스프링 컨테이너에 새로운 빈 객체를 제공할 수 있음
+
+#### @EnableWebMvc
+- DispatcherServlet의 RequestMappingHandlerMapping, RequestMappingHandlerAdapter, ExceptionHandlerExceptionResolver, MessageConverter 등 Web에 필요한 빈들을 대부분 자동으로 설정
+- (xml로 설정의 <mvc:annotation-driven/> 와 동일)
+- 기본 설정 이외의 설정이 필요하다면 WebMvcConfigurerAdapter 를 상속받도록 Java config class를 작성한 후, 필요한 메소드를 오버라이딩 하도록 함 
+  
+#### @ComponentScan
+- ComponentScan애노테이션을 이용하면 Controller, Service, Repository, Component애노테이션이 붙은 클래스를 찾아 스프링 컨테이너가 관리하게 된다.
+- DefaultAnnotationHandlerMapping과 RequestMappingHandlerMapping구현체는 다른 핸드러 매핑보다 훨씬 더 정교한 작업을 수행한다. 이 두 개의 구현체는 애노테이션을 사용해 매핑 관계를 찾는 매우 강력한 기능을 가지고 있다. 이들 구현체는 스프링 컨테이너 즉 애플리케이션 컨텍스트에 있는 요청 처리 빈에서 RequestMapping애노테이션을 클래스나 메소드에서 찾아 HandlerMapping객체를 생성하게 된다.
+  - HandlerMapping은 서버로 들어온 요청을 어느 핸들러로 전달할지 결정하는 역할을 수행한다.
+- DefaultAnnotationHandlerMapping은 DispatcherServlet이 기본으로 등록하는 기본 핸들러 맵핑 객체이고, RequestMappingHandlerMapping은 더 강력하고 유연하지만 사용하려면 명시적으로 설정해야 한다.  
+  
+### Controller(Handler) 클래스 작성하기
+- @Controller 애노테이션을 클래스 위에 붙인다.
+- 맵핑을 위해 @RequestMapping 애노테이션을 클래스나 메소드에서 사용한다.  
+- 요청이 들어왔을때 어떤 url로 들어왔는지 알아내고 어떤 요청이 들어왔을 때 어떤 부분을 실행해야하는지 알려주기 위함
+
+#### @RequestMapping
+- Http 요청과 이를 다루기 위한 Controller 의 메소드를 연결하는 어노테이션
+- Http Method 와 연결하는 방법
+ - @RequestMapping(value="/users", method=RequestMethod.POST)
+ - From Spring 4.3 version (@GetMapping, @PostMapping, @PutMapping, @DeleteMapping, @PatchMapping)
+- Http 특정 해더와 연결하는 방법
+ - @RequestMapping(method = RequestMethod.GET, headers = "content-type=application/json")
+- Http Parameter 와 연결하는 방법
+ - @RequestMapping(method = RequestMethod.GET, params = "type=raw")
+- Content-Type Header 와 연결하는 방법
+ - @RequestMapping(method = RequestMethod.GET, consumes = "application/json")
+- Accept Header 와 연결하는 방법
+ - @RequestMapping(method = RequestMethod.GET, produces = "application/json")
